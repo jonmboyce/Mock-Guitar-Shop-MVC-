@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNet.Identity
+@using StorefrontLab.Data.EF;
+
+@if (Request.IsAuthenticated) {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+        @Html.AntiForgeryToken()
+
+        //Get current logged on user and get their id to retrieve the associated userdetails object
+        //greet user by first name instead of email address
+
+        //1)connection to db and then when it doesn't work add using statement back to the data layer.
+        StoreFrontEntities db = new StoreFrontEntities();
+        //2) get the current logged on user
+        string userId = User.Identity.GetUserId();
+        //3) retrieve the user details associated witht teh asp.net user *it's a lot and i don't get it come back later and try to figure out 
+        UserDetail currentUser = db.UserDetails.Where(ud => ud.UserId == userId).FirstOrDefault();
+        //4)could add a special detail like fav color or something i guess, don't understand the need as of yet so skipping
+        //5)if user is null, give them a default value. shouldn't happen but do it anyway
+        string userFN = "Guest";
+        if (currentUser != null)
+        {
+            userFN = currentUser.FirstName;
+        }
+
+        //swap out the User.Identity.GetUserName() with our new variable, userFN
+
+
+
+            <li class="btn btn-default">
+                @Html.ActionLink("Hello " + @*User.Identity.GetUserName()*@userFN + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage"})<br />
+           <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </li>
+       
+    }
+}
+else {
+  
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="btn btn-default"})</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-default" })</li>
+    
+}

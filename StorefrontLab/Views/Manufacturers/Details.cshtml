@@ -1,0 +1,61 @@
+﻿@model StorefrontLab.Data.EF.Manufacturer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2><strong>@ViewBag.Title</strong></h2>
+<hr />
+<div id="mainContentViews">
+    <div id="productHeader">
+        <div id="productHeaderLeft">
+            <div>
+                <h4>Add New Manufacturer!</h4>
+            </div>
+        </div>
+        <div id="productHeaderRight">
+            <div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div id="productLeft">
+        <p>
+            <img src="~/Content/images/@Model.Logo" alt="@Model.ManufacturerName" />
+        </p>
+
+    </div>
+    <div id="productRight">
+        <p>
+            Manufacturer Name:
+            @Html.DisplayFor(model => model.ManufacturerName)
+        </p>
+        <p>
+            City:
+            @Html.DisplayFor(model => model.City)
+        </p>
+        <p>
+
+            State:
+            @Html.DisplayFor(model => model.State)
+        </p>
+        <p>
+            Country:
+            @Html.DisplayFor(model => model.Country)
+        </p>
+        <p>
+            Warranty:
+            @Html.DisplayFor(model => model.Warranty)
+        </p>
+    </div>
+    <div class="clearfix"></div>
+</div>
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ManufacturerID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+

@@ -1,0 +1,25 @@
+﻿@model StorefrontLab.Models.ContactViewModel
+
+@{
+    ViewBag.Title = "EmailConfirmation";
+}
+
+<h2>Email Confirmation</h2>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7">
+            Name: @Html.DisplayFor(model => model.Name)
+        </div>
+        <div class="col-sm-7">
+            Email: @Html.DisplayFor(model => model.Email)
+        </div>
+        <div class="col-sm-7">
+            Subject: @Html.DisplayFor(model => model.Subject)
+        </div>
+        <div class="col-sm-7">
+            Message: @Html.DisplayFor(model => model.Message)
+                    </div>
+            </div>
+</div>

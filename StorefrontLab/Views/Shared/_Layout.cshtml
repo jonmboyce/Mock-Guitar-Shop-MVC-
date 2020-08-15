@@ -1,0 +1,128 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="~/Content/img/favicon.png" rel="icon">
+    <link href="~/Content/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800|Roboto+Slab:400,300,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="~/Content/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/animations.css" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="~/Content/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!--AJAX stylesheet-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css">
+    <!-- Main Stylesheet File -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link href="~/Content/css/colors/color-3498db.css" rel="stylesheet">
+    <!--Added PagedList Stylesheet-->
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/CustomStyles.css" rel="stylesheet" />
+    <!-- =======================================================
+      Template Name: NewFirm
+      Template URL: https://templatemag.com/newfirm-bootstrap-business-template/
+      Author: TemplateMag.com
+      License: https://templatemag.com/license/
+    ======================================================= -->
+</head>
+
+<body>
+
+    <!-- Fixed navbar -->
+
+    <div class="container">
+        <div class="row text-center">
+            <a class="navbar-brand col-sm-12" href="#"><b>Crazy Eddie's</b> Guitar Shack</a>
+
+            <div class="row">
+                <ul class="nav navbar-nav  navbar-right navButtons btn-group">
+                    <li><a href="@Url.Action("Index", "Home")" class="btn btn-default ">Home</a></li>
+                    <li><a href="@Url.Action("Index", "Products")" class="btn btn-default">Products</a></li>
+                    @*<li><a href="@Url.Action("Index", "Categories")" class="btn btn-default">Categories</a></li>*@
+                    <li><a href="@Url.Action("Index", "Manufacturers")" class="btn btn-default">Brands</a></li>
+                    <li><a href="@Url.Action("Contact", "Home")" class="btn btn-default">Contact</a></li>
+                    @Html.Partial("_LoginPartial")
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin", null, new { @class = "btn btn-default" })</li>
+                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin", null, new { @class = "btn btn-default" })</li>
+                    }
+                     @if (Session["cart"] != null)
+                    {
+                        //total qty of the items that are currently in the session version of cart
+                        var cart = (Dictionary<int, StorefrontLab.Models.ShoppingCartViewModel>)Session["cart"];
+                        var cartCount = cart.Sum(x => x.Value.Qty);
+                        <li>
+                            <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-default">
+                                <i class="fa fa-shopping-cart"></i>
+                                <sup>
+                                    <span class="cartCount">@cartCount</span>
+                                </sup>
+                            </a>
+
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--Add this to render AJAX messages-->
+    <div id="MessageDisplay" class="row">
+        <div class="col-md col-md-offset1 text-center" id="MessageContent"></div>
+    </div>
+    <div id="mainContent">
+
+
+        <div class="row">
+
+        </div>
+
+        @RenderBody()
+    </div>
+
+    <!-- FOOTER -->
+    <div id="copyrights">
+        <div class="container">
+            <p>
+                &copy;<strong>Jon M Boyce</strong> 2020
+            </p>
+            <div class="credits" style="opacity:.2;">
+                Created with NewFirm template by <a href="https://templatemag.com/">TemplateMag</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="~/Content/lib/jquery/jquery.min.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/lib/php-mail-form/validate.js"></script>
+    <script src="~/Content/lib/retina/retina.js"></script>
+    <!-- Template Main Javascript File -->
+    <script src="~/Content/js/main.js"></script>
+    <!--add jquery ui cdn-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--added jQuery AJAX CDN-->
+    <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+    @RenderSection("Scripts", false);
+
+
+</body>
+</html>
+

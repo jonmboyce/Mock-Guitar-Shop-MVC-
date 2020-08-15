@@ -1,0 +1,77 @@
+﻿@model StorefrontLab.Data.EF.Manufacturer
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Manufacturers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div id="mainContentViews">
+
+        <div id="productHeader">
+            <h2 id="productHeaderLeft">
+                @Html.LabelFor(model => model.ManufacturerName, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.ManufacturerName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ManufacturerName, "", new { @class = "text-danger" })
+            </h2>
+            <div id="productHeaderRight">
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div id="productLeft">
+            <p>
+                <img src="~/Content/images/noImage.jpg" title="No Book Image" alt="default image" /><br />
+                <input type="file" style="display:inline;" name="ImageUpload"/> <!--whatever you name the input has to match on the value accepted of the post action-->
+                <br />
+            </p>
+        </div>
+        <div id="productRight">
+            <p>
+                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Warranty, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Warranty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Warranty, "", new { @class = "text-danger" })
+
+            </p>
+        </div>
+        <div class="clearfix"></div>
+        <div id="bookFooter">
+            <div id="productFooterLeft">
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+            </div>
+            <div id="productFooterRight">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

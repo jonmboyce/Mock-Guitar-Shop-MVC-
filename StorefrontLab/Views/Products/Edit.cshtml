@@ -1,0 +1,89 @@
+﻿@model StorefrontLab.Data.EF.Product
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken() //makes sure the get and post originate from the same location
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ProductID) //this provides the product id for the get to retrieve the product to update
+                                              //and in the post to provide the correct updated record in db
+    @Html.HiddenFor(model => model.ProductImage)//here we make sure we keep the exisitng image if no new image is supplied 
+                                                //the file upload will Not populate from the current record
+    <div id="mainContentViews">
+
+        <div id="productHeader">
+            <div id="productHeaderLeft">
+                @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+            </div>
+            <div id="productHeaderRight">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="productLeft">
+            <!--in the edit we do have an image unlike the create so we update the image tag to include image associated
+                with this record at.model.-->
+            <p>
+                <img src="~/Content/images/@Model.ProductImage" title="@Model.ProductName" alt="@Model.ProductName" />
+                <br />
+            </p>
+        </div>
+        <div id="productRight">
+            <p>
+                @Html.LabelFor(model => model.InventoryStatusID, "InventoryStatusID", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownList("InventoryStatusID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.InventoryStatusID, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                @Html.LabelFor(model => model.ManufacturerID, "ManufacturerID", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownList("ManufacturerID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ManufacturerID, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </p>
+            @*<p>
+                @Html.LabelFor(model => model.SerialNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
+            </p>*@
+        </div>
+        <div class="clearfix"></div>
+        <div id="productFooter">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update Product" class="btn btn-default" />
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

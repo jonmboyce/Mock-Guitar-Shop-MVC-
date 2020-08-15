@@ -1,0 +1,75 @@
+﻿@model StorefrontLab.Data.EF.Product
+
+@{
+    ViewBag.Title = $"{Model.ProductName}";
+}
+
+<h2><strong>@ViewBag.Title</strong></h2>
+<hr />
+<div id="productContainer">
+
+    <div id="productHeader">
+        <div id="productHeaderLeft">
+            @Html.DisplayNameFor(model => model.ProductName)
+            @Html.DisplayFor(model => model.ProductName)
+        </div>
+
+        <div id="productHeaderRight">
+            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayFor(model => model.Price)
+        </div>
+    </div>
+    <div id="productLeft">
+        <p>
+            <img src="~/Content/images/@Model.ProductImage" alt="@Model.ProductName" />
+        </p>
+    </div>
+    <div id="productRight">
+        <p>
+            @Html.DisplayNameFor(model => model.InventoryStatus.InventoryStatusName)
+            @Html.DisplayFor(model => model.InventoryStatus.InventoryStatusName)
+        </p>
+
+        <p>
+            @Html.DisplayNameFor(model => model.Color)
+            @Html.DisplayFor(model => model.Color)
+        </p>
+
+        <p>
+            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayFor(model => model.Description)
+        </p>
+
+    </div>
+
+    @*@Html.DisplayNameFor(model => model.ProductImage)
+        @Html.DisplayFor(model => model.ProductImage)*@
+    @*@Html.DisplayNameFor(model => model.Category.Name)
+        @Html.DisplayFor(model => model.Category.Name)*@
+    @*@Html.DisplayNameFor(model => model.Manufacturer.ManufacturerName)
+        @Html.DisplayFor(model => model.Manufacturer.ManufacturerName)*@
+    <!--Add the "add to cart" functionality to the UI which is the details view so when they click on the details they get the option to add to cart-->
+    <p>
+        @using (Html.BeginForm("AddtoCart", "Products", new { @productID = Model.ProductID }, FormMethod.Post, new { @class = "text-center" }))
+        {
+            @Html.HiddenFor(x => x.ProductID)
+            <span class="label">Quantity: </span>
+            @Html.TextBox("Qty", 1, new { @class = "form-control", @style = "max-width:50px, display:inline; " })
+            <input type="submit" value="Add To Cart" class="btn btn-primary" name="qty" />
+        }
+    </p>
+
+</div>
+<!--Add for 2-column layout with full size image-->
+<div class="col-md-6 text-center">
+    <img src="~/Content/images/Model.ProductImage" title="Model.ProductName" alt="Picture of product" class="img-rounded" style="width:90%; max-width: 333px;" />
+</div>
+
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
