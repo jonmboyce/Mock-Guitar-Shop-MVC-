@@ -1,0 +1,92 @@
+﻿@*@model IEnumerable<StorefrontLab.Data.EF.Manufacturer>*@
+@model PagedList.IPagedList<StorefrontLab.Data.EF.Manufacturer>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Your Favorite Brands!";
+}
+
+<h2>Brands</h2>
+<div id="productHeaderLeft">
+
+
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
+</div>
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+
+    @if (Model.Count == 0)
+    {
+        <p class="alert alert-warning">
+            No results meet your criteria
+        </p>
+    }
+
+    <div id="mainContentViews">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Logo)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ManufacturerName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().State)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Warranty)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                                <img src="~/Content/images/@item.Logo" alt="Manufacturer Logo" title="@item.ManufacturerName" />
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.ManufacturerName, "Details", new { id = item.ManufacturerID })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Warranty)
+                        </td>
+
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ManufacturerID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ManufacturerID })
+                        </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

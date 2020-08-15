@@ -1,0 +1,281 @@
+﻿@*@model IEnumerable<StorefrontLab.Data.EF.Product>              <!--****Products Index****-->*@
+<!--updating with pages list and using below-->
+@model PagedList.IPagedList<StorefrontLab.Data.EF.Product>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Products";
+}
+
+
+<h2>Products</h2>
+
+
+<!--This adds the searchbox on the right side-->
+<div id="mainContentViews">
+    <div class="row">
+
+        <div class="col-sm-offset-7 col-sm-4 text-right">
+            @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+            {
+                <p class="pull-right text-right searchBox">
+                    <!--set textbox for search, but also track the last aka current search term applied (tracked with viewbag-->
+                    @*signature: ("Name", "Current Value", htmlAttributers)*@
+                    Find by Name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { placeholder = "Search Title" })
+                    <input type="submit" value="Search" class="btn btn-primary text-center" style="margin-top:5px;" />
+                </p>
+            }
+        </div>
+
+    </div>
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+
+    @if (Model.Count == 0)
+    {
+        <p class="alert alert-warning">
+            No results meet your criteria
+        </p>
+    }
+
+    <div>
+        @if (User.IsInRole("Admin"))
+        {
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        }
+
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductImage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Color)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.SerialNumber)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+                </th>
+
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Category.Name)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayNameFor(model => model.InventoryStatus.InventoryStatusName)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Manufacturer.ManufacturerName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/Content/images/.@item.ProductImage" alt="@item.ProductName" title="@item.ProductName" />
+                    </td>
+                    <td>
+                        <!--jquery is looking for the id  property so manually set it after the detail links in html attributes-->
+                        <!--commented out the ajax link to display a more uniform webpage-->
+                        @*@Html.ActionLink(item.ProductName, "ProductDetails", new { id = item.ProductID }, new { @class = "DetailsLink", id = item.ProductID })*@
+                        @Html.ActionLink(item.ProductName, "Details", new { id = item.ProductID })
+                        @Html.DisplayFor(modelItem => item.ProductName)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer.ManufacturerName)
+                    </td>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })
+                            @*<a href="" class="EditLink" id="@item.ProductID*/">Edit</a> |*@
+                            @Ajax.ActionLink("Delete", "ProductsDelete", "Products", new { id = item.ProductID },
+                            new AjaxOptions
+                            {
+                                HttpMethod = "Post",
+                                Confirm = "Are you sure you want to remove the " + item.ProductName + " from Products?",
+                                OnSuccess = "deleteConfirmed"
+                            })
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!--placeholders for our scripts to land-->
+    <div id="ProductDetails"></div>
+    <div id="ProductEdit"></div>
+</div>
+    @section scripts {
+        <script type="text/javascript">
+            //ajax delete confirmation
+
+            function deleteConfirmed(response, status, data) {
+                //Remove the old row from the table - that will match up with the response from the action
+                var rowId = '#Product-' + response.id;
+                $('#ProductsTable').find(rowId).remove();
+
+                //Display a status message. (this is why we added the div to the layout)
+                $('#MessageContent').html("<div class='alert alert-success'> response." + response.message + "</div>");
+            }//end of delete
+
+            //AJAX details dialog box
+            $('a.DetailsLink').click(function (e) {
+                e.preventDefault();//prevents the browser window from reloading which i think is kind of the point of ajax.
+                //(declaration, Assignment).dialog
+                $('#ProductDetails').data('pId', $(this).attr('id')).dialog({
+                    //dialog properties can be found at the jqueryui.com dialog-modal
+                    modal: true,
+                    open: function () {
+                        //grab the id of the row data and assign it to a new variable
+                        var data = $(this).data('pId');
+                        //Load the new productDetails partialView using the id
+                        $(this).load("/Products/ProductDetails/" + data);
+                    },
+                    width: 400,
+                    height: 400,
+                    title: "Product Details",
+                    resizable: false
+                });
+            });
+
+            //Details Script****
+            //$('a.DetailsLink').click(function (e) {
+            //    e.preventDefault();//stopping page reload
+            //    $('#ProductDetails').data('pId'), $(this).attr('id').dialog({
+            //        modal: true,
+            //        open: function () {
+            //            var data = $(this).data('pId');
+            //            $(this).load("/Products/ProductDetails/" + data);
+            //        },
+            //        width: 400,
+            //        height: 250,
+            //        title: "Product Details",
+            //        resizable: false
+
+            //        //Dialog properties from jquery ui - dialog modal
+
+            //    });
+            //});
+
+        //#AJAX TOGGLE CREATE FORM OPEN AND CLOSED SCRIPT                                                                               ***********Create AJAX
+            //SHOULD DEFAULT TO CLOSED- CLICK TOGGLES OPEN, AND ANOTHER BACK TO CLOSED
+            $('#ProductCreate').hide();
+            //button above
+            $('#toggleProductCreate').click(function () {
+                $('#ProductCreate').toggle();
+            //toggle the color of the button
+            if ($('#ProductCreate').is(':visible')) {
+                //change the text text on the button
+                $('toggleProductCreate').html('Cancel');
+                $('toggleProductCreate').attr('class', 'reset-button');
+                //change the button color/class
+            }//end if
+            else {
+                $('#toggleProductCreate').html('Create Product');
+                $('toggleProductCreate').attr('class', 'btn btn-primary');
+            }
+
+            });
+
+            //Script to submit the form
+            $('ProductCreateForm').submit(function (e) {
+                //Serialize (package up teh form data for transport as an object)
+                //create an array of objects with a name and a value
+                var formData = $(this).serializeArray();
+
+                //interrupt the normal submit event
+                e.preventDefault();
+
+                //message the user while it is processing - i suppose in case it is a lot to load or something
+                $('#MessageContent').html("<div class='alert alert-info'>Please Wait....</div>");
+                //Call to ajax
+                $.ajax({
+                    //call the product PorductCreate action *********************************I changed this from ajaxCreate
+                    url: '@Url.Action("ProductCreate", "Products")',
+                    type: "POST",
+                    //serialized form data
+                    data: formData,
+                    //send it as json
+                    dataType: "json",
+                    //make sure that it worked
+                    success: function (data) {
+                        //if it DID work, show the success msg in the div located above the render body in the layout
+                        $('#MessageContent').html("<div class='alert alert-success'>Your record was successfully inserted!</div>");
+                        //clear the form ****************************look here for problems, don't remember this variable
+                        $('#ProductCreateForm')[0].reset();
+                        //Add the temporary row to the table (remember that the browser is being manually updated so you will see a message to refresh the view
+                        //you could code these in, we're leaving them out so we can see asynchronous activity)
+                        //when the view is refreshed the new record will load into the table with links to the last column
+                        $(function () {
+                            var row = '<tr><td>' + data.ProductName
+                                + '</td><td>' + data.InventoryStatusID
+                                + '</td><td>' + data.CategoryID
+                                + '</td><td>' + data.Color
+                                + '</td><td>' + data.Description
+                                + '</td><td>' + data.SerialNumber
+                                + '</td><td>' + data.Price
+                                + '</td><td>' + data.ProductImage
+                                + '</td><td></td><td>Refresh to view options </td> <tr>'; //buttons are not available for the new item
+                            //add row to the table
+                            $('#ProductsTable').append(row);
+                            //close the form and show the create button
+                            $('#ProductCreate').toggle();
+                            $('#toggleProductCreate').html('Create Product');
+                            $('#toggleProductCreate').attr('class', 'btn btn-primary');
+                        });
+                    },
+                    //If there is an error, show the alert message in the div located above the render body
+                    error: function (e) {
+                        $('MessageContent').html(",div class='alert alert-warning'>There was an error. Please try again or contact the site admin.</div>");
+                    }
+                });
+            });
+
+            //show the edit dialog box * i think the a. targets anchor tags automatically and edit link we just set up so google the jquery a. functionality
+            $('a.Editlink').click(function (e) {
+                e.preventDefault(); //wont let the browser automatically reload this way
+
+                //***ask chuck here - i think it is an otfv saying "this data is stored as id and popping up a dialog box but no idea really
+                $('ProductEdit').data('pId', $(this).attr('id')).dialog({
+                    modal: true,
+                    open: function() {
+                        var data = $(this).data('pId');
+                        $(this).load("/Products/ProductEdit/" + data);
+                    },
+                    width: 600,
+                    height: 450,
+                    title: 'Edit Publisher',
+                    resizable: false
+                });
+            });
+        </script>
+    }
+

@@ -1,0 +1,85 @@
+﻿@model StorefrontLab.Data.EF.Product
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<!--This was just using(HtmlBeginForm() i added the parameters from step 2 of guide-->
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div id="mainContentViews">
+
+    <div id="productHeader">
+        <h2 id="productHeaderLeft">
+            @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+        </h2>
+        <div id="productHeaderRight">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="productLeft">
+        <p>
+            <img src="~/Content/images/noImage.jpg" title="No Book Image" alt="default image" /><br />
+            <input type="file" name="ImageUpload" /> <!--whatever you name the input has to match on hte value accepted of the post action-->
+            <br />
+        </p>
+        <p>
+            @Html.LabelFor(model => model.SerialNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
+        </p>
+    </div>
+    <div id="productRight">
+        <p>
+            @Html.LabelFor(model => model.InventoryStatusID, "InventoryStatusID", htmlAttributes: new { @class = "control-label"})
+            <!--View bag(controller, null (select list), prompt text, html attributes-->
+            @Html.DropDownList("InventoryStatusID", null, "[-Choose-Status-]", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.InventoryStatusID, "", new { @class = "text-danger" })
+        </p>
+        <p>
+            @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("CategoryID", null, "[-Choose-ID-]", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+        </p>
+        <p>
+            @Html.LabelFor(model => model.ManufacturerID, "ManufacturerID", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ManufacturerID", null, "[-Choose-Manufacturer-Id-]",htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ManufacturerID, "", new { @class = "text-danger" })
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </p>
+    </div>
+    <div class="clearfix"></div>
+    <div id="bookFooter">
+        <div id="productFooterLeft">
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger"})
+        </div>
+        <div id="productFooterRight">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
