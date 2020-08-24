@@ -78,7 +78,7 @@ namespace StorefrontLab.Controllers
                         logo.SaveAs(Server.MapPath("~Content/images/" + "imgName"));
                     } else
                     {
-                        imgName = "noImage.jpg"
+                        imgName = "noImage.jpg";
                     }
                 }
                 //no matter which way that ended up we need to add the name to the object
