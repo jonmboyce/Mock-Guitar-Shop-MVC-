@@ -4,9 +4,10 @@
     ViewBag.Title = $"{Model.ProductName}";
 }
 
-<h2><strong>@ViewBag.Title</strong></h2>
+
 <hr />
 <div id="mainContentViews">
+    <h2>@ViewBag.Title</h2><hr />
     <div id="productHeader">
         <div id="productHeaderLeft">
             <div>
@@ -24,7 +25,7 @@
     </div>
     <div id="productLeft">
         <p>
-            <img src="~/Content/images/@Model.ProductImage" alt="@Model.ProductName" />
+            <img src="~/Content/images/@Model.ProductImage" alt="@Model.ProductName" class="detailPic" />
         </p>
 
     </div>
@@ -50,8 +51,8 @@
             @Html.DisplayFor(model => model.Description)
         </p>
         <p>
-            @Html.LabelFor(model => model.SerialNumber)
-            @Html.EditorFor(model => model.SerialNumber )
+            @Html.DisplayNameFor(Model => Model.SerialNumber)
+            @Html.DisplayFor(model => model.SerialNumber)
         </p>
     </div>
     <div class="clearfix"></div>
@@ -60,15 +61,15 @@
 
 
     <!--Add the "add to cart" functionality to the UI which is the details view so when they click on the details they get the option to add to cart-->
-    <p>
+    <div class="col-sm-2 productRight">
         @using (Html.BeginForm("AddtoCart", "Products", new { @productID = Model.ProductID }, FormMethod.Post, new { @class = "text-center" }))
         {
             @Html.HiddenFor(x => x.ProductID)
             <span class="label">Quantity: </span>
             @Html.TextBox("Qty", 1, new { @class = "form-control", @style = "max-width:50px, display:inline; " })
-            <input type="submit" value="Add To Cart" class="btn btn-primary" name="qty" />
+            <input type="submit" value="Add To Cart" class="btn btn-primary" name="qty" style="margin-top:1em;"/>
         }
-    </p>
+    </div>
 
 </div>
 <!--Add for 2-column layout with full size image-->

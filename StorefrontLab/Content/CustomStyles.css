@@ -2,19 +2,31 @@
 /*font-family: 'Dancing Script', cursive;
 font-family: 'Montserrat', sans-serif;*/
 #mainContent {
-    width: 95%;
+    width: 80%;
     margin: 2em auto;
     min-height: 790px;
    
 }
 
+body {
+    background-image: url('images/backDropGuitarShop.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+
+
 #mainContentViews {
+   
+    background-color: white;
     width: 95%;
     margin: 2em auto;
-    min-height: 830px;
-    padding: 5em;
-    border: 20px solid #808080;
-    box-shadow: inset 0 0 35px #000000;
+    min-height: 600px;
+    padding: 1em;
+    border: 1px solid black;
+    /*opacity:.95;*/
+
+    
 }
 /*#productContainer {
     border: 4px solid #535BA0;
@@ -35,6 +47,7 @@ font-family: 'Montserrat', sans-serif;*/
     font-size: 125%;
     margin-left: 86%;
     text-align: right;
+    margin-right: 2em;
 }
 
 #productLeft {
@@ -44,12 +57,16 @@ font-family: 'Montserrat', sans-serif;*/
 
 #productLeft img {
         width: 95%;
+        margin-top: 3em;
     }
 
 #productRight {
     margin-left: 41%;
 }
 
+.productRight {
+    margin-left: 41%;
+}
 /*#productFooter {
 }*/
 
@@ -73,13 +90,18 @@ label {
 }
 
 #coverQuote {
-    font-family: 'Dancing Script', cursive;
+    margin-top: 27em;
 
+}
+
+.artistQuotes {
+    font-weight:500;
+    color:white;
 }
 #coverWelcome {
     font-family: 'Montserrat', sans-serif;
     color: white;
-    margin-top: 6.4em;
+    margin-top: 5.7em;
 }
 
 .navButtons{
@@ -98,11 +120,16 @@ label {
 #contactBox {
     border: 4px black solid;
     padding: 2em 5em;
-    box-shadow: grey 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.5) 7px 7px;
+    background: white;
 }
 
 #contactImage {
     width: 35%;
     float: right !important;
     padding-bottom: 4em;
+}
+
+.artistQuoteContainer {
+    margin-top: 10em;
 }

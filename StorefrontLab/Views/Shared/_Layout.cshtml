@@ -41,15 +41,16 @@
 <body>
 
     <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container text-center">
-            <div class="navbar-header col-lg-12 col-md-12 col-sm-4">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"></button>
-                <a class="navbar-brand" href="#"><b>Crazy Eddie's</b> Guitar Shack</a>
-                <ul class="nav navbar-nav navbar-right navButtons btn-group">
+
+    <div class="container">
+        <div class="row text-center">
+            <a class="navbar-brand col-sm-12" href="#"><b>Crazy Eddie's</b> Guitar Shack</a>
+
+            <div class="row">
+                <ul class="nav navbar-nav  navbar-right navButtons btn-group">
                     <li><a href="@Url.Action("Index", "Home")" class="btn btn-default ">Home</a></li>
                     <li><a href="@Url.Action("Index", "Products")" class="btn btn-default">Products</a></li>
-                    <li><a href="@Url.Action("Index", "Categories")" class="btn btn-default">Categories</a></li>
+                    @*<li><a href="@Url.Action("Index", "Categories")" class="btn btn-default">Categories</a></li>*@
                     <li><a href="@Url.Action("Index", "Manufacturers")" class="btn btn-default">Brands</a></li>
                     <li><a href="@Url.Action("Contact", "Home")" class="btn btn-default">Contact</a></li>
                     @Html.Partial("_LoginPartial")
@@ -58,25 +59,41 @@
                         <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin", null, new { @class = "btn btn-default" })</li>
                         <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin", null, new { @class = "btn btn-default" })</li>
                     }
+                     @if (Session["cart"] != null)
+                    {
+                        //total qty of the items that are currently in the session version of cart
+                        var cart = (Dictionary<int, StorefrontLab.Models.ShoppingCartViewModel>)Session["cart"];
+                        var cartCount = cart.Sum(x => x.Value.Qty);
+                        <li>
+                            <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-default">
+                                <i class="fa fa-shopping-cart"></i>
+                                <sup>
+                                    <span class="cartCount">@cartCount</span>
+                                </sup>
+                            </a>
+
+                        </li>
+                    }
 
                 </ul>
             </div>
-    
-
-            <!--/.nav-collapse -->
-        </div> @*@Html.ActionLink(item.Name, "Details", new { id = item.Name })*@
+        </div>
     </div>
+
+
+
+
     <!--Add this to render AJAX messages-->
     <div id="MessageDisplay" class="row">
         <div class="col-md col-md-offset1 text-center" id="MessageContent"></div>
     </div>
     <div id="mainContent">
 
-        
+
         <div class="row">
-            
+
         </div>
-        
+
         @RenderBody()
     </div>
 

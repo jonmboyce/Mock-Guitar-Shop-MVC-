@@ -12,7 +12,7 @@ namespace StorefrontLab.Controllers
         //Get Shopping Cart
         public ActionResult Index()
         {
-            //create a local version of the shopping cart from teh Session(global)version
+            //create a local version of the shopping cart from the Session(global)version
             var shoppingCart = (Dictionary<int, ShoppingCartViewModel>)Session["cart"];
 
             // if the value is  null or the count is 0, create an empty instance and provide no cart items.
@@ -21,6 +21,7 @@ namespace StorefrontLab.Controllers
                 //new empty instance of the local shopping cart to pass to the view
                 shoppingCart = new Dictionary<int, ShoppingCartViewModel>();
                 ViewBag.Message = ("Your cart is empty");
+                
             }
             else //if there is something in the cart
             {

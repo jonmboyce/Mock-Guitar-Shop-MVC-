@@ -8,11 +8,12 @@
 }
 
 
-<h2>Products</h2>
+
 
 
 <!--This adds the searchbox on the right side-->
 <div id="mainContentViews">
+    <h2>Instruments and equipment, you know you need 'em all!</h2><hr />
     <div class="row">
 
         <div class="col-sm-offset-7 col-sm-4 text-right">
@@ -88,14 +89,13 @@
             {
                 <tr>
                     <td>
-                        <img src="~/Content/images/.@item.ProductImage" alt="@item.ProductName" title="@item.ProductName" />
+                        <img src="~/Content/images/@item.ProductImage" alt="@item.ProductName" title="@item.ProductName" />
                     </td>
                     <td>
                         <!--jquery is looking for the id  property so manually set it after the detail links in html attributes-->
                         <!--commented out the ajax link to display a more uniform webpage-->
                         @*@Html.ActionLink(item.ProductName, "ProductDetails", new { id = item.ProductID }, new { @class = "DetailsLink", id = item.ProductID })*@
                         @Html.ActionLink(item.ProductName, "Details", new { id = item.ProductID })
-                        @Html.DisplayFor(modelItem => item.ProductName)
 
                     </td>
 

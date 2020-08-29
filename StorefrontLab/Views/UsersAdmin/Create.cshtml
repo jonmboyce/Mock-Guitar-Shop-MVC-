@@ -3,15 +3,15 @@
     ViewBag.Title = "Create";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>Create a new User</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-error" })
-    <div class="form-group">
+    <div class="form-group" id="mainContentViews">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })

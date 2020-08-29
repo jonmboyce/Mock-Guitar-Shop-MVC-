@@ -208,7 +208,10 @@
     <Content Include="Content\CustomStyles.css" />
     <Content Include="Content\images\backDropGuitarShop.jpg" />
     <Content Include="Content\images\blackPlayerStrat.jpg" />
+    <Content Include="Content\images\blackPlayerTele.jpg" />
+    <Content Include="Content\images\blondePlayerTele.jpg" />
     <Content Include="Content\images\butterCreamPlayerStrat.jpg" />
+    <Content Include="Content\images\CapriOrangePlayerTele.jpg" />
     <Content Include="Content\images\contactImage.jpg" />
     <Content Include="Content\images\FenderLogo.jpg" />
     <Content Include="Content\images\koala.jpg" />
@@ -218,8 +221,10 @@
     <Content Include="Content\images\orangePlayerStrat.jpg" />
     <Content Include="Content\images\silverPlayerStrat.jpg" />
     <Content Include="Content\images\soundboard.jpg" />
+    <Content Include="Content\images\sunburstPlayerTele.jpg" />
     <Content Include="Content\images\sunburstStrat.jpg" />
     <Content Include="Content\images\tidepoolPlayerStrat.jpg" />
+    <Content Include="Content\images\tidepoolPlayerTele.jpg" />
     <Content Include="Content\images\whitePlayerStrat.jpg" />
     <Content Include="Content\img\apple-touch-icon.png" />
     <Content Include="Content\img\awrap.jpg" />
@@ -493,6 +498,7 @@
     <Content Include="Views\Products\ProductEdit.cshtml" />
     <Content Include="Views\Products\ProductCreate.cshtml" />
     <Content Include="Views\Products\Details - Copy %282%29.cshtml" />
+    <Content Include="Views\Manufacturers\Index - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
