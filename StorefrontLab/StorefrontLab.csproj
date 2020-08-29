@@ -498,6 +498,7 @@
     <Content Include="Views\Products\ProductEdit.cshtml" />
     <Content Include="Views\Products\ProductCreate.cshtml" />
     <Content Include="Views\Products\Details - Copy %282%29.cshtml" />
+    <Content Include="Views\Manufacturers\Index - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
