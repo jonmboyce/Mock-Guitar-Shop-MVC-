@@ -26,10 +26,10 @@
 
 
 
-            <li>
-                @Html.ActionLink("Hello " + @*User.Identity.GetUserName()*@userFN + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage"})
+            <li class="btn btn-default">
+                @Html.ActionLink("Hello " + @*User.Identity.GetUserName()*@userFN + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage"})<br />
+           <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
        
     }
 }

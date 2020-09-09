@@ -50,7 +50,7 @@ namespace StorefrontLab.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]                                          //***LOGO added to database***
         public ActionResult Create([Bind(Include = "ManufacturerID,ManufacturerName,Logo,City,State,Country,Warranty")] Manufacturer manufacturer,
             HttpPostedFileBase logo)
         {
@@ -78,7 +78,7 @@ namespace StorefrontLab.Controllers
                         logo.SaveAs(Server.MapPath("~Content/images/" + "imgName"));
                     } else
                     {
-                        imgName = "noImage.jpg"
+                        imgName = "noImage.jpg";
                     }
                 }
                 //no matter which way that ended up we need to add the name to the object
@@ -111,7 +111,7 @@ namespace StorefrontLab.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]                                          //***Logo added***
         public ActionResult Edit([Bind(Include = "ManufacturerID,ManufacturerName,Logo,City,State,Country,Warranty")] Manufacturer manufacturer)
         {
             if (ModelState.IsValid)

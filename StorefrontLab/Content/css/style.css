@@ -1319,10 +1319,13 @@ p>tag {
 /* Copyrights */
 
 #copyrights {
-  background: #222222;
+  background: #000;
   padding: 20px 0;
   text-align: center;
   color: #fff;
+  position: absolute;
+ 
+  width: 100%;
 }
 
 #copyrights p {

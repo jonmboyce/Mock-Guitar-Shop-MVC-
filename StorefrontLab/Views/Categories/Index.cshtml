@@ -10,29 +10,15 @@
 
 
 
-@* styles for classes don't forget *@
-<!--I think i want to change this page where if you click on the category, it brings up a search and paging view where it shows all from that category
-        it could be something to do once the rest is done, i don't know how crazy to go here. I could also hide categories and access all products through product search
-    although that isn't really a great thing-->
 <div id="productHeaderLeft">
     <h2>@ViewBag.Title</h2>
 
-    <!--Hide the create functionality so only admins can access it and update-->
     @if (User.IsInRole("admin"))
     {
         <p>
             @Html.ActionLink("Create New", "Create")
         </p>
     }
-    <!--add the searchbox on the right-->
-    @*@using (Html.BeginForm("Index", "Categories", FormMethod.Get))
-        {
-            <p class="pull-right text-right">
-                Find by Category: @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { placeholder = "Search Title" })
-                <input type="submit" value="Search" class="btn btn-primary" />
-            </p>
-        }*@
-</div> <!--end of search **what do i call this? a function?-->
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
 
